@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
 import { Cookie, setCookie } from "std/http/mod.ts";
 
-const proxyTo = `https://bravtexfashionstore.vtexcommercestable.com.br/api`;
+const proxyTo = `https://lojacrisbarros.vtexcommercestable.com.br/api`;
 
 const hopByHop = [
   "Keep-Alive",
@@ -132,6 +132,8 @@ const proxy: Handlers["GET"] = async (req, ctx) => {
     },
   );
 
+  // console.log(response);
+
   // Change cookies domain
   const responseHeaders = new Headers(response.headers);
   const cookies = getSetCookies(responseHeaders);
@@ -139,7 +141,7 @@ const proxy: Handlers["GET"] = async (req, ctx) => {
   for (const cookie of cookies) {
     setCookie(responseHeaders, { ...cookie, domain: url.hostname });
   }
-
+ 
   return new Response(response.body, {
     status: response.status,
     headers: responseHeaders,
